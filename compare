@@ -1,0 +1,32 @@
+import os
+import glob
+import hashlib
+BLOCKSIZE = 65536
+flist = []
+for p in (glob.glob("/var/www/html/*/*.*")):	
+	hasher = hashlib.sha1()
+	with open(p, 'rb') as afile:
+    		buf = afile.read(65536)
+    		while len(buf) > 0:
+        		hasher.update(buf)
+       			buf = afile.read(BLOCKSIZE)
+			with open('/var/www/html/demofile.txt', 'a') as f:
+    				for item in hasher.hexdigest():
+						f.write(item)
+	print(p+' '+hasher.hexdigest())
+	str1 = hasher.hexdigest()
+print("\n")
+flist = []
+for p in (glob.glob("/var/www/htmlbk/*/*.*")):	
+	hasher = hashlib.sha1()
+	with open(p, 'rb') as afile:
+    		buf = afile.read(65536)
+    		while len(buf) > 0:
+        		hasher.update(buf)
+       			buf = afile.read(BLOCKSIZE)
+	print(p+' '+hasher.hexdigest())
+	str2 = hasher.hexdigest()
+print("\n")
+
+
+
